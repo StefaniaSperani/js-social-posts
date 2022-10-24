@@ -1,7 +1,7 @@
 /*
 Ricreiamo un feed social aggiungendo al layout di base fornito, il nostro script JS in cui:
 
-Milestone 1
+x Milestone 1
 Creiamo il nostro array di oggetti che rappresentano ciascun post.
 Ogni post dovrà avere le informazioni necessarie per stampare la relativa card:
 - id del post, numero progressivo da 1 a n
@@ -14,7 +14,7 @@ Ogni post dovrà avere le informazioni necessarie per stampare la relativa card:
 Non è necessario creare date casuali
 Per le immagini va bene utilizzare qualsiasi servizio di placeholder ad es. Unsplash (https://unsplash.it/300/300?image=<id>)
 
-Milestone 2
+x Milestone 2
 Prendendo come riferimento il layout di esempio presente nell'html, stampiamo i post del nostro feed.
 
 Milestone 3
@@ -82,15 +82,18 @@ const posts = [
         },
         "likes": 95,
         "created": "2021-03-05"
+        
     }
+    
 ];
 console.log(posts);
+
 
 //creo la variabile del container presente nel DOM(questa è un'HTML Collection)
 const containerPost = document.getElementById('container');
 
 //ora ciclo l'array, in modo che mi mostri gli oggetti in esso contenuti
-posts.forEach((value, index) => {
+posts.forEach((value) => {
     //creo il div dove finirà tutta la struttura del post
     const post = document.createElement('div');
     //e gli aggiungo la classe che gli darà lo stile del CSS
@@ -100,10 +103,10 @@ posts.forEach((value, index) => {
     <div class="post__header">
                 <div class="post-meta">                    
                     <div class="post-meta__icon">
-                        <img class="profile-pic" src="https://unsplash.it/300/300?image=15" alt="Phil Mangione">                    
+                        <img class="profile-pic" src="${value.author.image}" alt="${value.author.name}">                    
                     </div>
                     <div class="post-meta__data">
-                        <div class="post-meta__author">${value.author}</div>
+                        <div class="post-meta__author">${value.author.name}</div>
                         <div class="post-meta__time">${value.created}</div>
                     </div>                    
                 </div>
@@ -129,3 +132,12 @@ posts.forEach((value, index) => {
     //per fare in modo che si veda nel DOM lo appendo al suo contenitore padre
     containerPost.appendChild(post);
 })
+//ora devo creare la funzione per il like al post quindi estraggo il bottone dal DOM
+const btnLike = document.querySelector('.like-button');
+//e creo la funzione che al click, cambierà colore alla scritta e incrementa il numero di likes
+function clickLike(){
+    console.log('sono like');
+
+}
+//e attacco la funzione al bottone
+btnLike.addEventListener('click', clickLike)
