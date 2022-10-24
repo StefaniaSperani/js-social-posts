@@ -137,7 +137,7 @@ const btnLike = document.querySelector('.like-button');
 //e creo la funzione che al click, cambierà colore alla scritta e incrementa il numero di likes
 function clickLike(){
     console.log('sono like');
-
+    
 }
 //e attacco la funzione al bottone
 btnLike.addEventListener('click', clickLike)
