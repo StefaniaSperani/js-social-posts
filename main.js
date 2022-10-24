@@ -1,6 +1,8 @@
 /*
 Ricreiamo un feed social aggiungendo al layout di base fornito, il nostro script JS in cui:
-Milestone 1 - Creiamo il nostro array di oggetti che rappresentano ciascun post.
+
+Milestone 1
+Creiamo il nostro array di oggetti che rappresentano ciascun post.
 Ogni post dovrà avere le informazioni necessarie per stampare la relativa card:
 - id del post, numero progressivo da 1 a n
 - nome autore,
@@ -9,15 +11,20 @@ Ogni post dovrà avere le informazioni necessarie per stampare la relativa card:
 - testo del post,
 - immagine (non tutti i post devono avere una immagine),
 - numero di likes.
- Non è necessario creare date casuali
- Per le immagini va bene utilizzare qualsiasi servizio di placeholder ad es. Unsplash (https://unsplash.it/300/300?image=<id>)
-Milestone 2 - Prendendo come riferimento il layout di esempio presente nell'html, stampiamo i post del nostro feed.
-Milestone 3- Se clicchiamo sul tasto "Mi Piace" cambiamo il colore al testo del bottone e incrementiamo il counter dei likes relativo.
+Non è necessario creare date casuali
+Per le immagini va bene utilizzare qualsiasi servizio di placeholder ad es. Unsplash (https://unsplash.it/300/300?image=<id>)
+
+Milestone 2
+Prendendo come riferimento il layout di esempio presente nell'html, stampiamo i post del nostro feed.
+
+Milestone 3
+Se clicchiamo sul tasto "Mi Piace" cambiamo il colore al testo del bottone e incrementiamo il counter dei likes relativo.
 Salviamo in un secondo array gli id dei post ai quali abbiamo messo il like.
+
 BONUS
- 1. Formattare le date in formato italiano (gg/mm/aaaa)
+1. Formattare le date in formato italiano (gg/mm/aaaa)
 2. Gestire l'assenza dell'immagine profilo con un elemento di fallback che contiene le iniziali dell'utente (es. Luca Formicola > LF).
- 3. Al click su un pulsante "Mi Piace" di un post, se abbiamo già cliccato dobbiamo decrementare il contatore e cambiare il colore del bottone.
+3. Al click su un pulsante "Mi Piace" di un post, se abbiamo già cliccato dobbiamo decrementare il contatore e cambiare il colore del bottone.
 */
 
 const posts = [
@@ -77,3 +84,48 @@ const posts = [
         "created": "2021-03-05"
     }
 ];
+console.log(posts);
+
+//creo la variabile del container presente nel DOM(questa è un'HTML Collection)
+const containerPost = document.getElementById('container');
+
+//ora ciclo l'array, in modo che mi mostri gli oggetti in esso contenuti
+posts.forEach((value, index) => {
+    //creo il div dove finirà tutta la struttura del post
+    const post = document.createElement('div');
+    //e gli aggiungo la classe che gli darà lo stile del CSS
+    post.className = ('post');
+    //e lo inserisco nel DOM
+    post.innerHTML = `
+    <div class="post__header">
+                <div class="post-meta">                    
+                    <div class="post-meta__icon">
+                        <img class="profile-pic" src="https://unsplash.it/300/300?image=15" alt="Phil Mangione">                    
+                    </div>
+                    <div class="post-meta__data">
+                        <div class="post-meta__author">${value.author}</div>
+                        <div class="post-meta__time">${value.created}</div>
+                    </div>                    
+                </div>
+            </div>
+            <div class="post__text">${value.content}</div>
+            <div class="post__image">
+                <img src="${value.media}" alt="Immagine di ${value.author}.">
+            </div>
+            <div class="post__footer">
+                <div class="likes js-likes">
+                    <div class="likes__cta">
+                        <a class="like-button  js-like-button" href="#" data-postid="1">
+                            <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
+                            <span class="like-button__label">Mi Piace</span>
+                        </a>
+                    </div>
+                    <div class="likes__counter">
+                        Piace a <b id="like-counter-1" class="js-likes-counter">${value.likes}</b> persone
+                    </div>
+                </div> 
+            </div>            
+    `;
+    //per fare in modo che si veda nel DOM lo appendo al suo contenitore padre
+    containerPost.appendChild(post);
+})
