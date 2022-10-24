@@ -82,9 +82,9 @@ const posts = [
         },
         "likes": 95,
         "created": "2021-03-05"
-
+        
     }
-
+    
 ];
 console.log(posts);
 
@@ -140,32 +140,35 @@ let likeCounter = document.querySelectorAll('.js-likes-counter')
 let likedPosts = document.getElementById('like-counter-1');
 //e lo setto vuoto, così man mano si popola
 likedPosts = [];
-
+//per tenere traccia se il post riceve un like o meno, creo una variabile che imposto a false
+let isLiked = false;
 
 //Creo la funzione che al click, cambierà colore alla scritta e incrementa il numero di likes
-function clickLike(i) {
-    //imposto una variabile che controlla che l'id del post sia inserito nell'array likedPost
-    let isLiked = likedPosts.includes(posts[i].id);
-    console.log('clickLike', i, isLiked, posts[i].id)
-    if (isLiked === false) {
+function clickLike(i){
+    console.log('sono like', i, isLiked);
+    //se il post NON ha ricevuto like, al click entrerà in questo blocco
+    if(!isLiked){ //isLikded === false
         //aggiungo la classe che gli farà cambiare colore, insieme all'indice che lo cambierà a tutti
         btnLike[i].classList.add('like-button--liked');
         //ora deve incrementare il like, sempre con l'indice
         likeCounter[i].innerHTML = ++posts[i].likes;
         //ora devo pushare nell'array i like piaciuti
         likedPosts.push(posts[i].id);
-    }else{
-        likeCounter[i].innerHTML = --posts[i].likes;
+        //e infine setto la variabile a true
+        isLiked = true;
+    //se invece il post HA ricevuto il like, al click entrerà in questo blocco
+    }else if(isLiked){ //isLiked === true
+        //rimuovendo la classe del colore
         btnLike[i].classList.remove('like-button--liked');
-        let indexLikedPost = likedPosts.indexOf(posts[i].id);
-        likedPosts.splice(indexLikedPost, 1);
-        console.log(indexLikedPost, likedPosts);
+        //e decrementando il numero di like
+        likeCounter[i].innerHTML = --posts[i].likes;
+        //risettando la variabile a false, come lo era all'inizio
+        isLiked = false;
     }
-
 }
 //e attacco la funzione al bottone di ogni post, di cui tengo traccia tramite l'index
-for (let i = 0; i < btnLike.length; i++) {
-    btnLike[i].addEventListener('click', () => clickLike(i))
+for(let i = 0; i < btnLike.length; i++){
+    btnLike[i].addEventListener('click', ()=> clickLike(i))
 }
 
 
