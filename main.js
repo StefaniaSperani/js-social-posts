@@ -24,7 +24,7 @@ Salviamo in un secondo array gli id dei post ai quali abbiamo messo il like.
 BONUS
 1. Formattare le date in formato italiano (gg/mm/aaaa)
 2. Gestire l'assenza dell'immagine profilo con un elemento di fallback che contiene le iniziali dell'utente (es. Luca Formicola > LF).
-3. Al click su un pulsante "Mi Piace" di un post, se abbiamo già cliccato dobbiamo decrementare il contatore e cambiare il colore del bottone.
+x 3. Al click su un pulsante "Mi Piace" di un post, se abbiamo già cliccato dobbiamo decrementare il contatore e cambiare il colore del bottone.
 */
 
 const posts = [
@@ -118,18 +118,19 @@ posts.forEach((userPost) => {
             <div class="post__footer">
                 <div class="likes js-likes">
                     <div class="likes__cta">
-                        <a class="like-button  js-like-button" data-postid="1">
+                        <a class="like-button  js-like-button" data-postid="${userPost.id}">
                             <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
                             <span class="like-button__label">Mi Piace</span>
                         </a>
                     </div>
                     <div class="likes__counter">
-                        Piace a <b id="like-counter-1" class="js-likes-counter">${userPost.likes}</b> persone
+                        Piace a <b id="like-counter-${userPost.id}" class="js-likes-counter">${userPost.likes}</b> persone
                     </div>
                 </div> 
             </div>            
     `;
     //per fare in modo che si veda nel DOM lo appendo al suo contenitore padre
+    //dentro il forEach, cosi ad ogni nuovo post lo appende sempre
     containerPost.appendChild(post);
 })
 //ora devo creare la funzione per il like al post, quindi estraggo il bottone dal DOM
@@ -137,7 +138,7 @@ const btnLike = document.querySelectorAll('.like-button');
 //estraggo il counter che incrementa(o decresce)
 let likeCounter = document.querySelectorAll('.js-likes-counter')
 //estraggo il counter che diventerà l'array con al suo interno i post piaciuti
-let likedPosts = document.getElementById('like-counter-1');
+let likedPosts = document.getElementById('like-counter-${userPost.id}');
 //e lo setto vuoto, così man mano si popola
 likedPosts = [];
 
